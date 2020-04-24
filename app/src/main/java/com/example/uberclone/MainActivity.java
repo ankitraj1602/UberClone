@@ -46,10 +46,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .equals("passenger")) {
                 Intent intent = new Intent(MainActivity.this, PassengerMap.class);
                 startActivity(intent);
+                finish();
             }
-        } else {
-
-            ParseUser.getCurrentUser().logOut();
+            else if (ParseUser.getCurrentUser().get("as").toString().toLowerCase()
+                    .equals("driver")) {
+                Intent intent = new Intent(MainActivity.this, DriversActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
 
 
@@ -91,10 +95,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             public void done(ParseException e) {
                                 if (e == null) {
                                     Toast.makeText(MainActivity.this, "Signed Up!", Toast.LENGTH_SHORT).show();
-                                    if(as.toLowerCase()=="passenger"){
+                                    if(as.toLowerCase().equals("passenger")==true){
                                         Intent intent = new Intent(MainActivity.this,PassengerMap.class);
                                         startActivity(intent);
-                                       // finish();
+                                        finish();
+                                    }
+                                    else if(as.toLowerCase().equals("driver")==true){
+                                        Intent intent = new Intent(MainActivity.this,DriversActivity.class);
+                                        startActivity(intent);
+                                        finish();
                                     }
                                 } else {
                                     Toast.makeText(MainActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -116,12 +125,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 public void done(ParseUser user, ParseException e) {
 
                                     if(user!=null && e==null){
-                                     if(user.get("as").toString().toLowerCase().equals(as)){
+                                     if(user.get("as").toString().toLowerCase().equals(as)==true){
                                          Toast.makeText(MainActivity.this, "Logged In!", Toast.LENGTH_SHORT).show();
-                                         if(as.toLowerCase()=="passenger"){
+                                         if(as.toLowerCase().equals("passenger")==true){
                                              Intent intent = new Intent(MainActivity.this,PassengerMap.class);
                                              startActivity(intent);
-                                             //finish();
+                                             finish();
+                                         }
+                                         else if(as.toLowerCase().equals("driver")){
+                                             Intent intent = new Intent(MainActivity.this,DriversActivity.class);
+                                             startActivity(intent);
+                                             finish();
+                                         }
+
+                                         else{
+                                             Toast.makeText(MainActivity.this, "Loookkk", Toast.LENGTH_SHORT).show();
                                          }
 
                                      }
@@ -137,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                     );
                 }
+                break;
 
             case R.id.btnOneTimeLogIn:
 
@@ -152,10 +171,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 if(user!=null && e==null){
                                     user.put("as", edtOneTimeDriverPass
                                             .getText().toString());
-                                    if(as.toLowerCase()=="passenger"){
+                                    if(as.toLowerCase().equals("passenger")==true){
                                         Intent intent = new Intent(MainActivity.this,PassengerMap.class);
                                         startActivity(intent);
-                                        //finish();
+                                        finish();
+                                    }
+                                   else if(as.toLowerCase().equals("driver")==true){
+                                        Intent intent = new Intent(MainActivity.this,DriversActivity.class);
+                                        startActivity(intent);
+                                        finish();
                                     }
 
                                 }
